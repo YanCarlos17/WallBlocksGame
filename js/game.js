@@ -3,8 +3,8 @@ var ctx = canvas.getContext("2d");
 var ballRadius = 10;
 var x = canvas.width/2;
 var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
+var dx = 3;
+var dy = -3;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width-paddleWidth)/2;
@@ -18,6 +18,7 @@ var brickPadding = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var bricks = [];
+var score = 0;
 
 for(c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
@@ -44,7 +45,7 @@ function keyUpHandler(e) {
     }
 }
 
-function collisionDetection() {
+function deteccionDeColision() {
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
             var b = bricks[c][r];
@@ -52,13 +53,14 @@ function collisionDetection() {
                 if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
                     dy = -dy;
                     b.status = 0;
+                    score++;
                 }
             }
         }
     }
 }
 
-function drawBall() {
+function dibujarBola() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI*2);
     ctx.fillStyle = "red";
@@ -66,7 +68,7 @@ function drawBall() {
     ctx.closePath();
 }
 
-function drawPaddle() {
+function dibujarPaleta() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
@@ -74,7 +76,7 @@ function drawPaddle() {
     ctx.closePath();
 }
 
-function drawBricks() {
+function dibujarLadrillos() {
     for(c=0; c<brickColumnCount; c++) {
         for(r=0; r<brickRowCount; r++) {
             if(bricks[c][r].status == 1) {
@@ -91,14 +93,21 @@ function drawBricks() {
         }
     }
 }
+function dibujarPuntuación(){
+    ctx.font = "16px Comic";
+    ctx.fillStyle = "black";
+    ctx.fillText("Score: "+score, 8, 20);
+}
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    drawPaddle();
-    collisionDetection();
-    drawBricks();
-    
+function dibujar() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //Esta linea limpia el fotograma para dibujar el nuevo
+    dibujarBola();
+    dibujarPaleta();
+    deteccionDeColision();
+    dibujarLadrillos();
+    dibujarPuntuación();
+
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
     }
@@ -111,7 +120,7 @@ function draw() {
         }
         else {
             alert("GAME OVER -- POR PONY");
-            document.location.reload();
+            document.location.reload(true);
         }
     }
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
@@ -123,5 +132,4 @@ function draw() {
     x += dx;
     y += dy;
 }
-
-setInterval(draw, 10);
+setInterval(dibujar, 10);
