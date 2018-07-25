@@ -28,6 +28,7 @@ for(c=0; c<brickColumnCount; c++) {
 }
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", movimientoRaton, false);
 function keyDownHandler(e) {
     if(e.keyCode == 39) {
         rightPressed = true;
@@ -42,6 +43,13 @@ function keyUpHandler(e) {
     }
     else if(e.keyCode == 37) {
         leftPressed = false;
+    }
+}
+
+function movimientoRaton(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
     }
 }
 
@@ -97,6 +105,7 @@ function dibujarLadrillos() {
         }
     }
 }
+
 function dibujarPuntuación(){
     ctx.font = "16px Comic";
     ctx.fillStyle = "black";
@@ -104,7 +113,6 @@ function dibujarPuntuación(){
 }
 
 function dibujar() {
-
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Esta linea limpia el fotograma para dibujar el nuevo
     dibujarBola();
     dibujarPaleta();
