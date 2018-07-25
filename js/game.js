@@ -119,6 +119,7 @@ function dibujarVidas() {
     ctx.fillText("Intentos:"+ lives, canvas.width - 80, 20);
 }
 
+//Esta funcion se encarga de mostrar todas las funciones y acciones de nuestro juego.
 function dibujar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Esta linea limpia el fotograma para dibujar el nuevo
     dibujarBola();
@@ -162,4 +163,5 @@ function dibujar() {
     x += dx;
     y += dy;
 }
+
 setInterval(dibujar, 10);
