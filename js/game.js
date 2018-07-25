@@ -54,6 +54,10 @@ function deteccionDeColision() {
                     dy = -dy;
                     b.status = 0;
                     score++;
+                    if(score == brickRowCount*brickColumnCount) {
+                        alert("GANASTE, PUERCO!");
+                        document.location.reload();
+                    }
                 }
             }
         }
