@@ -11,30 +11,6 @@
     var rightPressed = false;
     var leftPressed = false;    
 
-// function blocks(){
-//     ctx.beginPath();
-//     ctx.rect(20, 20, 100, 30);
-//     ctx.fillStyle = "#0095DD";
-//     ctx.fill();
-//     ctx.closePath();
-
-//     ctx.beginPath();
-//     ctx.rect(130, 20, 100, 30);
-//     ctx.fillStyle = "#0095DD";
-//     ctx.fill();
-//     ctx.closePath();
-
-//     ctx.beginPath();
-//     ctx.rect(240, 20, 100, 30);
-//     ctx.fillStyle = "#0095DD";
-//     ctx.fill();
-//     ctx.closePath();
-// }
-
-// function drawBlocks(){
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     blocks();
-// }
 function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
@@ -55,12 +31,24 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddle();
+
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
-        dx = -dx;   
+        dx = -dx;
     }
-    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+    if(y + dy < ballRadius) {
         dy = -dy;
     }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+        }
+        else {
+            alert("MUCHO PONY");
+            document.location.reload();
+        }
+    }
+    
+
     x += dx;
     y += dy;
 
@@ -81,7 +69,6 @@ function keyDownHandler(e) {
         leftPressed = true;
     }
 }
-
 function keyUpHandler(e) {
     if(e.keyCode == 39) {
         rightPressed = false;
