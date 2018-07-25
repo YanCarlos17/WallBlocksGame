@@ -19,6 +19,7 @@ var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var bricks = [];
 var score = 0;
+var lives = 3;
 
 for(c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
@@ -112,6 +113,12 @@ function dibujarPuntuación(){
     ctx.fillText("Score: "+score, 8, 20);
 }
 
+function dibujarVidas() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "black";
+    ctx.fillText("Intentos:"+ lives, canvas.width - 80, 20);
+}
+
 function dibujar() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); //Esta linea limpia el fotograma para dibujar el nuevo
     dibujarBola();
@@ -119,6 +126,7 @@ function dibujar() {
     deteccionDeColision();
     dibujarLadrillos();
     dibujarPuntuación();
+    dibujarVidas();
 
     if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
         dx = -dx;
@@ -131,8 +139,18 @@ function dibujar() {
             dy = -dy;
         }
         else {
-            alert("GAME OVER -- POR PONY");
-            document.location.reload(true);
+            lives--;
+            if(!lives) {
+                alert("GAME OVER");
+                document.location.reload();
+            }
+            else {
+                x = canvas.width/2;
+                y = canvas.height-30;
+                dx = 3;
+                dy = -3;
+                paddleX = (canvas.width-paddleWidth)/2;
+            }
         }
     }
     if(rightPressed && paddleX < canvas.width-paddleWidth) {
