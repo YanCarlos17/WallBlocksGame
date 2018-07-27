@@ -5,12 +5,12 @@ var x = canvas.width/2;
 var y = canvas.height-30;
 var dx = 3;
 var dy = -3;
-var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleHeight = 15;
+var paddleWidth = 80;
 var paddleX = (canvas.width-paddleWidth)/2;
 var rightPressed = false;
 var leftPressed = false;
-var brickRowCount = 3;
+var brickRowCount = 4;
 var brickColumnCount = 5;
 var brickWidth = 75;
 var brickHeight = 30;
@@ -21,9 +21,9 @@ var bricks = [];
 var score = 0;
 var lives = 3;
 
-for(c=0; c<brickColumnCount; c++) {
+for(c = 0; c < brickColumnCount; c++) {
     bricks[c] = [];
-    for(r=0; r<brickRowCount; r++) {
+    for(r = 0; r < brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
 }
@@ -142,7 +142,7 @@ function dibujar() {
         else {
             lives--;
             if(!lives) {
-                alert("GAME OVER");
+                alert("HAS PERDIDO -- PUERCA");
                 document.location.reload();
             }
             else {
